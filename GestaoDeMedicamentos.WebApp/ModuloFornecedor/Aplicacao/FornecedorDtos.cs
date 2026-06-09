@@ -6,3 +6,8 @@ public record ListarFornecedorDTOS(
     string Telefone,
     string Cnpj
 );
+public record CadastrarFornecedorDTOs(
+    string Nome,
+    string Telefone,
+    string Cnpj
+);

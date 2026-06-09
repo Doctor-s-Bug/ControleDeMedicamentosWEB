@@ -13,15 +13,50 @@ public class ServicoFornecedor
         this.repositorioFornecedor = repositorioFornecedor;
     }
 
+    public Result Cadastrar(CadastrarFornecedorDTOs dto)
+    {
+        Fornecedor novoFornecedor = new(dto.Nome, dto.Telefone, dto.Cnpj);
+
+        if (ExisteFornecedorComCnpj(dto.Cnpj))
+            return Falha(nameof(dto.Cnpj), "Já existe um Fornecedor com este CNPJ.");
+
+        Result resultadoValidacao = ValidarEntidade(novoFornecedor);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        repositorioFornecedor.Cadastrar(novoFornecedor);
+
+        return Result.Ok();
+    }
+
+    private static Result ValidarEntidade(Fornecedor fornecedor)
+    {
+        List<string> erros = fornecedor.Validar();
+
+        if (erros.Count == 0)
+            return Result.Ok();
+
+        return Result.Fail(new FluentResults.Error(erros.First()).WithMetadata("Campo", string.Empty));
+    }
+    private static Result Falha(string campo, string mensagem)
+    {
+        return Result.Fail(new FluentResults.Error(mensagem).WithMetadata("Campo", campo));
+    }
+    private bool ExisteFornecedorComCnpj(string cpnj, string? cnpjIgnorado = null)
+    {
+        return repositorioFornecedor
+            .SelecionarTodos()
+            .Any(c =>
+                c.Cnpj != cnpjIgnorado &&
+                string.Equals(c.Cnpj, cpnj, StringComparison.OrdinalIgnoreCase)
+            );
+    }
     public List<ListarFornecedorDTOS> SelecionarTodos()
     {
         return repositorioFornecedor
             .SelecionarTodos()
             .Select(c => new ListarFornecedorDTOS(c.Id, c.Nome, c.Telefone, c.Cnpj))
             .ToList();
-    }
-    private static Result Falha(string campo, string mensagem)
-    {
-        return Result.Fail(new FluentResults.Error(mensagem).WithMetadata("Campo", campo));
     }
 }
