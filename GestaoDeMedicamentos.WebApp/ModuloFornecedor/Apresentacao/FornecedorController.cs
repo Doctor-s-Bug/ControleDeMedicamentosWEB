@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentResults;
+using GestaoDeMedicamentos.WebApp.Compartilhado.Apresentacao.Extensions;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -40,13 +41,40 @@ public class FornecedorController : Controller
         //Aqui tem que ver dps pq ele não envia as mensagens de erros da ValidarEntidade();
         if (resultado.IsFailed)
         {
-            foreach (var erro in resultado.Errors)
-            {
-                string campo = erro.Metadata["Campo"]?.ToString() ?? "";
+            ModelState.AddModelError(resultado);
 
-                ModelState.AddModelError(campo, erro.Message);
-            }
             return View(vm);
+        }
+
+        return RedirectToAction(nameof(Listar));
+    }
+    [HttpGet]
+    public ActionResult Excluir(string Id)
+    {
+        Result<DetalhesFornecedorDto> resultado = servicoFornecedor.SelecionarPorId(Id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ExcluirFornecedorViewModel vm = mapper.Map<ExcluirFornecedorViewModel>(resultado.Value);
+
+        return View(vm);
+    }
+
+    [HttpPost]
+    public ActionResult Excluir(ExcluirFornecedorViewModel vm)
+    {
+        Result resultado = servicoFornecedor.Excluir(vm.Id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
         }
 
         return RedirectToAction(nameof(Listar));

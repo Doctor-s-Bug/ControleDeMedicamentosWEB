@@ -11,3 +11,10 @@ public record CadastrarFornecedorDTOs(
     string Telefone,
     string Cnpj
 );
+
+public record DetalhesFornecedorDto(
+    string Id,
+    string Nome,
+    string Telefone,
+    string Cnpj
+);

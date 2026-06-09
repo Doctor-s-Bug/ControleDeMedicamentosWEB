@@ -18,3 +18,9 @@ public record CadastrarFornecedorViewModel(
     [StringLength(14, ErrorMessage = "O campo \"CNPJ\" deve conter 14 caracteres.")]
     string Cnpj
 );
+public record ExcluirFornecedorViewModel(
+    string Id,
+    string Nome,
+    string Telefone,
+    string Cnpj
+);

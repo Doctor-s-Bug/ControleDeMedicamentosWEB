@@ -29,7 +29,26 @@ public class ServicoFornecedor
 
         return Result.Ok();
     }
+    public Result Excluir(string Id)
+    {
+        Fornecedor? fornecedor = repositorioFornecedor.SelecionarPorId(Id);
 
+        if (fornecedor == null)
+            return Result.Fail("Fornecedor não Encontrado");
+
+        repositorioFornecedor.Excluir(Id);
+
+        return Result.Ok();
+    }
+    public Result<DetalhesFornecedorDto> SelecionarPorId(string id)
+    {
+        Fornecedor? fornecedor = repositorioFornecedor.SelecionarPorId(id);
+
+        if (fornecedor == null)
+            return Result.Fail("Fornecedor não encontrada.");
+
+        return Result.Ok(new DetalhesFornecedorDto(fornecedor.Id, fornecedor.Nome, fornecedor.Telefone, fornecedor.Cnpj));
+    }
     private static Result ValidarEntidade(Fornecedor fornecedor)
     {
         List<string> erros = fornecedor.Validar();
@@ -59,4 +78,5 @@ public class ServicoFornecedor
             .Select(c => new ListarFornecedorDTOS(c.Id, c.Nome, c.Telefone, c.Cnpj))
             .ToList();
     }
+
 }

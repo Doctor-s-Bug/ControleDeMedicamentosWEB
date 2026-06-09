@@ -8,5 +8,6 @@ public class FornecedorProfile : Profile
     public FornecedorProfile()
     {
         CreateMap<ListarFornecedorDTOS, ListarFornecedorViewModel>();
+        CreateMap<DetalhesFornecedorDto, ExcluirFornecedorViewModel>();
     }
 }
