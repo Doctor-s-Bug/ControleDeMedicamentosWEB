@@ -79,4 +79,20 @@ public class FornecedorController : Controller
 
         return RedirectToAction(nameof(Listar));
     }
+    [HttpGet]
+    public ActionResult Editar(string id)
+    {
+        Result<DetalhesFornecedorDto> resultado = servicoFornecedor.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        EditarFornecedorViewModel vm = mapper.Map<EditarFornecedorViewModel>(resultado.Value);
+
+        return View(vm);
+    }
 }
