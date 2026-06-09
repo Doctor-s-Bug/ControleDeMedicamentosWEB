@@ -1,11 +1,15 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
+using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Infra;
 
 namespace GestaoDeMedicamentos.WebApp.Compartilhado.Infra.Arquivos;
 
 public sealed class ContextoJson
 {
     private readonly string caminhoArquivo;
+
+    public List<Fornecedor> Fornecedores { get; set; } = new();
 
     public ContextoJson()
     {
@@ -48,5 +52,6 @@ public sealed class ContextoJson
         if (contextoSalvo == null)
             return;
 
+        Fornecedores = contextoSalvo.Fornecedores;
     }
 }
