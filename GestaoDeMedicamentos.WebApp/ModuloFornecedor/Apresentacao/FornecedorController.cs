@@ -37,6 +37,7 @@ public class FornecedorController : Controller
 
         Result resultado = servicoFornecedor.Cadastrar(dtos);
 
+        //Aqui tem que ver dps pq ele não envia as mensagens de erros da ValidarEntidade();
         if (resultado.IsFailed)
         {
             foreach (var erro in resultado.Errors)
@@ -45,7 +46,6 @@ public class FornecedorController : Controller
 
                 ModelState.AddModelError(campo, erro.Message);
             }
-
             return View(vm);
         }
 
