@@ -19,3 +19,10 @@ public record ExcluirFuncionarioViewModel(
     string Cpf,
     string Telefone
 );
+
+public record EditarFuncionarioViewModel(
+    string Id,
+    string Nome,
+    string Cpf,
+    string Telefone
+);

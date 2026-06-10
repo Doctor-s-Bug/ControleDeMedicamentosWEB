@@ -57,4 +57,20 @@ public class FuncionarioController : Controller
         repositorioFuncionario.Excluir(vm.Id);
         return RedirectToAction(nameof(Listar));
     }
+
+    public ActionResult Editar(string Id)
+    {
+        Funcionario? novoFuncionario = repositorioFuncionario.SelecionarPorId(Id);
+        EditarFuncionarioViewModel vm = new(novoFuncionario.Id, novoFuncionario.Nome, novoFuncionario.Cpf, novoFuncionario.Telefone);
+        return View(vm);
+    }
+
+    [HttpPost]
+
+    public ActionResult Editar(EditarFuncionarioViewModel vm)
+    {
+        Funcionario funcionarioEditado = new(vm.Nome, vm.Telefone, vm.Cpf);
+        repositorioFuncionario.Editar(vm.Id, funcionarioEditado);
+        return RedirectToAction(nameof(Listar));
+    }
 }
