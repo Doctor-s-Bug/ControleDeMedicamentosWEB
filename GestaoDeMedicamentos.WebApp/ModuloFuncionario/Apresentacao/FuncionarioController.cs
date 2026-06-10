@@ -41,4 +41,20 @@ public class FuncionarioController : Controller
         repositorioFuncionario.Cadastrar(novoFuncionario);
         return RedirectToAction(nameof(Listar));
     }
+
+    public ActionResult Excluir(string Id)
+    {
+        Funcionario? novoFuncionario = repositorioFuncionario.SelecionarPorId(Id);
+        ExcluirFuncionarioViewModel vm = new(novoFuncionario.Id, novoFuncionario.Nome, novoFuncionario.Cpf, novoFuncionario.Telefone);
+        return View(vm);
+    }
+
+    [HttpPost]
+
+    public ActionResult Excluir(ExcluirFuncionarioViewModel vm)
+    {
+        Funcionario? funcionarioExcluir = repositorioFuncionario.SelecionarPorId(vm.Id);
+        repositorioFuncionario.Excluir(vm.Id);
+        return RedirectToAction(nameof(Listar));
+    }
 }
