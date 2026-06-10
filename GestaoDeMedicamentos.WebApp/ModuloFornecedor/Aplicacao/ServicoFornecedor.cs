@@ -1,23 +1,26 @@
+using AutoMapper;
 using FluentResults;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GestaoDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 
 public class ServicoFornecedor
 {
+    public readonly IMapper mapper;
+
     private readonly IRepositorioFornecedor repositorioFornecedor;
 
-    public ServicoFornecedor(IRepositorioFornecedor repositorioFornecedor)
+    public ServicoFornecedor(IRepositorioFornecedor repositorioFornecedor, IMapper mapper)
     {
         this.repositorioFornecedor = repositorioFornecedor;
+        this.mapper = mapper;
     }
 
     public Result Cadastrar(CadastrarFornecedorDTOs dto)
     {
         Fornecedor novoFornecedor = new(dto.Nome, dto.Telefone, dto.Cnpj);
 
-        if (ExisteFornecedorComCnpj(dto.Cnpj))
+        if (ExisteOutroFornecedorComCnpj(dto.Cnpj))
             return Falha(nameof(dto.Cnpj), "Já existe um Fornecedor com este CNPJ.");
 
         Result resultadoValidacao = ValidarEntidade(novoFornecedor);
@@ -37,6 +40,29 @@ public class ServicoFornecedor
             return Result.Fail("Fornecedor não Encontrado");
 
         repositorioFornecedor.Excluir(Id);
+
+        return Result.Ok();
+    }
+    public Result Editar(EditarFornecedorDTOs vm)
+    {
+        DetalhesFornecedorDto dto = mapper.Map<DetalhesFornecedorDto>(vm);
+
+        Result<DetalhesFornecedorDto> resultado = SelecionarPorId(vm.Id);
+
+        if (resultado.IsFailed)
+            return Result.Fail("Fornecedor não Encontrado");
+
+        if (ExisteOutroFornecedorComCnpj(dto.Cnpj, dto.Id))
+            return Falha(nameof(dto.Cnpj), "Já existe um Fornecedor com este CNPJ.");
+
+        Fornecedor fornecedorEditado = mapper.Map<Fornecedor>(vm);
+
+        Result resultadoValidacao = ValidarEntidade(fornecedorEditado);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        repositorioFornecedor.Editar(dto.Id, fornecedorEditado);
 
         return Result.Ok();
     }
@@ -62,13 +88,13 @@ public class ServicoFornecedor
     {
         return Result.Fail(new FluentResults.Error(mensagem).WithMetadata("Campo", campo));
     }
-    private bool ExisteFornecedorComCnpj(string cpnj, string? cnpjIgnorado = null)
+    private bool ExisteOutroFornecedorComCnpj(string cnpj, string? fornecedorId = null)
     {
         return repositorioFornecedor
             .SelecionarTodos()
-            .Any(c =>
-                c.Cnpj != cnpjIgnorado &&
-                string.Equals(c.Cnpj, cpnj, StringComparison.OrdinalIgnoreCase)
+            .Any(f =>
+                f.Id != fornecedorId &&
+                string.Equals(f.Cnpj, cnpj, StringComparison.OrdinalIgnoreCase)
             );
     }
     public List<ListarFornecedorDTOS> SelecionarTodos()

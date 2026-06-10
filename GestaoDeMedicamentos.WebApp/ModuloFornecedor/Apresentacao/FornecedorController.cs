@@ -95,4 +95,22 @@ public class FornecedorController : Controller
 
         return View(vm);
     }
+    [HttpPost]
+    public ActionResult Editar(EditarFornecedorViewModel vm)
+    {
+        if (!ModelState.IsValid)
+            return View(vm);
+
+        EditarFornecedorDTOs dto = new(vm.Id, vm.Nome, vm.Telefone, vm.Cnpj);
+
+        Result resultado = servicoFornecedor.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+
+            return View(vm);
+        }
+        return RedirectToAction(nameof(Listar));
+    }
 }
