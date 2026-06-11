@@ -7,3 +7,9 @@ public record ListarMedicamentoDto(
     int QuantidadeEstoque,
     string Fornecedor
 );
+public record CadastrarMedicamentoDto(
+    string Nome,
+    string Descricao,
+    int QuantidadeEstoque,
+    string Fornecedor
+);
