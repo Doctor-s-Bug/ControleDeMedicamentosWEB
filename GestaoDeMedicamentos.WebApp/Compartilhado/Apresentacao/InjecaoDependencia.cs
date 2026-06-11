@@ -1,4 +1,7 @@
+using GestaoDeMedicamentos.WebApp.ModuloEstoque.Apresentacao;
+using GestaoDeMedicamentos.WebApp.ModuloEstoque.Dominio;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Apresentacao;
+using GestaoDeMedicamentos.WebApp.ModuloFuncionario.Apresentacao;
 using GestaoDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
 
 namespace GestaoDeMedicamentos.WebApp.Compartilhado.Apresentacao;
@@ -23,6 +26,8 @@ public static class InjecaoDependencia
         {
             config.AddProfile<FornecedorProfile>();
             config.AddProfile<MedicamentoProfile>();
+            config.AddProfile<EntradaProfile>();
+            config.AddProfile<FuncionarioProfile>();
             config.AddMaps(typeof(Program));
         });
     }

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using GestaoDeMedicamentos.WebApp.ModuloEstoque.Dominio;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Infra;
 using GestaoDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
@@ -16,6 +17,7 @@ public sealed class ContextoJson
     public List<Funcionario> Funcionarios { get; set; } = new();
     public List<Medicamento> Medicamentos { get; set; } = new();
     public List<Paciente> Pacientes { get; set; } = new();
+    public List<EntradaEstoque> EstoqueEntradas { get; set; } = new();
 
     public ContextoJson()
     {
@@ -63,5 +65,6 @@ public sealed class ContextoJson
         Funcionarios = contextoSalvo.Funcionarios;
         Medicamentos = contextoSalvo.Medicamentos;
         Pacientes = contextoSalvo.Pacientes;
+        EstoqueEntradas = contextoSalvo.EstoqueEntradas;
     }
 }

@@ -1,0 +1,52 @@
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Listagem de Entradas Estoque";
+}
+
+@model List<ListarEntradaViewModel>
+
+<body>
+    <a class="btn btn-outline-primary rounded-pill px-4 mb-3" asp-action="CadastrarEntrada">Cadastrar Novo</a>
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+    @if (@Model.Count == 0)
+    {
+        <div class="alert alert-primary border-start border-primary border-2 rounded-3" role="alert">
+            Nenhum Registro de Entrada Cadastrado.
+        </div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (ListarEntradaViewModel item in Model)
+            {
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title">@item.Medicamento</h5>
+                                <p class="card-text mb-2">
+                                    <strong>ID:</strong> @item.Id
+                                </p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <strong class="me-2">Funcionario:</strong>
+                                <span class="ms-2">@item.Funcionario</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <strong class="me-2">Quantidade:</strong>
+                                <span class="ms-2">@item.Quantidade</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</body>
