@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Infra;
+using GestaoDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
 using GestaoDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
 using GestaoDeMedicamentos.WebApp.ModuloPaciente.Dominio;
 
@@ -12,6 +13,7 @@ public sealed class ContextoJson
     private readonly string caminhoArquivo;
 
     public List<Fornecedor> Fornecedores { get; set; } = new();
+    public List<Funcionario> Funcionarios { get; set; } = new();
     public List<Medicamento> Medicamentos { get; set; } = new();
     public List<Paciente> Pacientes { get; set; } = new();
 
@@ -57,6 +59,8 @@ public sealed class ContextoJson
             return;
 
         Fornecedores = contextoSalvo.Fornecedores;
+
+        Funcionarios = contextoSalvo.Funcionarios;
         Medicamentos = contextoSalvo.Medicamentos;
         Pacientes = contextoSalvo.Pacientes;
     }
