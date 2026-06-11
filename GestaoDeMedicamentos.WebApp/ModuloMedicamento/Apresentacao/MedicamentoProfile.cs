@@ -10,5 +10,6 @@ public class MedicamentoProfile : Profile
     {
         CreateMap<ListarMedicamentoDto, ListarMedicamentoViewModel>();
         CreateMap<DetalhesMedicamentoDto, ExcluirMedicamentoViewModel>();
+        CreateMap<DetalhesMedicamentoDto, EditarMedicamentoViewModel>();
     }
 }

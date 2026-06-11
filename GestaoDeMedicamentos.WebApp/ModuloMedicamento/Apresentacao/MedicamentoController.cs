@@ -90,4 +90,21 @@ public class MedicamentoController : Controller
 
         return RedirectToAction(nameof(Listar));
     }
+    public ActionResult Editar(string id)
+    {
+        Result<DetalhesMedicamentoDto> dto = servicoMedicamento.SelecionarPorId(id);
+
+        if (dto.IsFailed)
+        {
+            TempData.AddErrorMessage(dto);
+            return RedirectToAction(nameof(Listar));
+        }
+        EditarMedicamentoViewModel vm = mapper.Map<EditarMedicamentoViewModel>(dto.Value);
+
+        List<ListarFornecedorDTOS> dtosFornecedor = servicoFornecedor.SelecionarTodos();
+
+        ViewBag.Fornecedores = mapper.Map<List<ListarFornecedorViewModel>>(dtosFornecedor);
+
+        return View(vm);
+    }
 }

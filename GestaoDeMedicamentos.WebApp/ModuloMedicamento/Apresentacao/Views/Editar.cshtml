@@ -1,0 +1,56 @@
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Edição de Medicamento";
+
+    List<ListarFornecedorViewModel> Fornecedores = ViewBag.Fornecedores;
+}
+
+@model EditarMedicamentoViewModel;
+
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="Editar"
+      asp-route-id="@Model.Id" method="post">
+    <input asp-for="Id" type="hidden">
+
+    <div class="mb-3">
+        <label asp-for="Nome" class="form-label fw-semibold text-primary text-uppercase small">Nome</label>
+        <input asp-for="Nome" type="text" class="form-control">
+        <span asp-validation-for="Nome" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Descricao" class="form-label fw-semibold text-primary text-uppercase small">Descrição</label>
+        <input asp-for="Descricao" type="text" class="form-control">
+        <span asp-validation-for="Descricao" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="QuantidadeEstoque" class="form-label fw-semibold text-primary text-uppercase small">Quantidade
+            de Estoque</label>
+            <input asp-for="QuantidadeEstoque" type="number" min="1" class="form-control">
+            <span asp-validation-for="QuantidadeEstoque" class="text-danger small fw-semibold"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Fornecedor" class="form-label fw-semibold text-uppercase small text-primary">Fornecedor</label>
+            <select asp-for="Fornecedor" class="form-control">
+                @foreach (ListarFornecedorViewModel fornecedor in Fornecedores)
+                {
+                    if (fornecedor.Id == Model.Id)
+                    {
+                        <option value="@fornecedor.Id" selected>
+                            @fornecedor.Nome
+                        </option>
+                    }
+                    <option value="@fornecedor.Id">
+                        @fornecedor.Nome
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="Fornecedor" class="text-danger small fw-semibold"></span>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
+            <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
+        </div>
+    </form>
