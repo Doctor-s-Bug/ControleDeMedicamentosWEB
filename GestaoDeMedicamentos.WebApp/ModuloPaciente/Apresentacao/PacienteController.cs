@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using GestaoDeMedicamentos.WebApp.ModuloPaciente.Dominio;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,6 +55,23 @@ public class PacienteController : Controller
     {
         Paciente? pacienteExcluir = repositorioPaciente.SelecionarPorId(vm.Id);
         repositorioPaciente.Excluir(vm.Id);
+        return RedirectToAction(nameof(Listar));
+    }
+
+    public ActionResult Editar(string Id)
+    {
+        Paciente? paciente = repositorioPaciente.SelecionarPorId(Id);
+        EditarPacienteViewModels vm = new(paciente.Id, paciente.Nome, paciente.Telefone, paciente.CartaoSus, paciente.Cpf);
+        return View(vm);
+    }
+
+    [HttpPost]
+
+    public ActionResult Editar(EditarPacienteViewModels vm)
+    {
+        Paciente? paciente = repositorioPaciente.SelecionarPorId(vm.Id);
+        Paciente pacienteEditado = new(vm.Nome, vm.Telefone, vm.CartaoSus, vm.Cpf);
+        repositorioPaciente.Editar(vm.Id, pacienteEditado);
         return RedirectToAction(nameof(Listar));
     }
 
