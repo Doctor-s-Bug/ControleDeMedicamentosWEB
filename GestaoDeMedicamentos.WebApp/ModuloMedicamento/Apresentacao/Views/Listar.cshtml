@@ -41,20 +41,21 @@
                             </div>
                             <div class="d-flex align-items-center">
                                 <strong class="me-2">Estoque:</strong>
-                                <span class="ms-2">@item.QuantidadeEstoque</span>
+                                <span class="ms-2 @(item.QuantidadeEstoque < 20 ? "text-danger" : "")">@item.QuantidadeEstoque
+                                    @(item.QuantidadeEstoque < 20 ? "Em Falta!" : "")</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <strong class="me-2">Fornecedor:</strong>
+                                    <span class="ms-2 ">@item.Fornecedor</span>
+                                </div>
+                                <a class="btn btn-outline-primary btn-sm rounded-pill px-3 mt-3 p-2" asp-action="Editar"
+                                   asp-route-id="@item.Id">Editar</a>
+                                <a class="btn btn-outline-primary btn-sm rounded-pill px-3 mt-3 p-2" asp-action="Excluir"
+                                   asp-route-id="@item.Id">Excluir</a>
                             </div>
-                            <div class="d-flex align-items-center">
-                                <strong class="me-2">Fornecedor:</strong>
-                                <span class="ms-2">@item.Fornecedor</span>
-                            </div>
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3 mt-3 p-2" asp-action="Editar"
-                               asp-route-id="@item.Id">Editar</a>
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3 mt-3 p-2" asp-action="Excluir"
-                               asp-route-id="@item.Id">Excluir</a>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
-    }
-</body>
+                }
+            </div>
+        }
+    </body>
