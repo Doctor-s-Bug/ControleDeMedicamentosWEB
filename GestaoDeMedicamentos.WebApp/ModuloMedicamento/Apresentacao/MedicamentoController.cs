@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentResults;
+using GestaoDeMedicamentos.WebApp.Compartilhado.Apresentacao.Extensions;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Apresentacao;
 using GestaoDeMedicamentos.WebApp.ModuloMedicamento.Aplicacao;
@@ -40,10 +41,11 @@ public class MedicamentoController : Controller
     public ActionResult Cadastrar(CadastrarMedicamentoViewModel vm)
     {
         if (!ModelState.IsValid)
-        {   
+        {
             //carrega novamente a lista de fornecedores pra n estourar exceção 
             List<ListarFornecedorDTOS> dtosFornecedor = servicoFornecedor.SelecionarTodos();
             ViewBag.Fornecedores = mapper.Map<List<ListarFornecedorViewModel>>(dtosFornecedor);
+
             RedirectToAction(nameof(Cadastrar));
         }
 
@@ -58,5 +60,19 @@ public class MedicamentoController : Controller
             return View(vm);
         }
         return RedirectToAction(nameof(Listar));
+    }
+    public ActionResult Excluir(string id)
+    {
+        Result<DetalhesMedicamentoDto> dto = servicoMedicamento.SelecionarPorId(id);
+
+        if (dto.IsFailed)
+        {
+            TempData.AddErrorMessage(dto);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        ExcluirMedicamentoViewModel vm = mapper.Map<ExcluirMedicamentoViewModel>(dto.Value);
+
+        return View(vm);
     }
 }

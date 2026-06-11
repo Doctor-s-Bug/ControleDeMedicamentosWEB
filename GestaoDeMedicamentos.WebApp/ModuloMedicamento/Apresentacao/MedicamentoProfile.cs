@@ -9,5 +9,6 @@ public class MedicamentoProfile : Profile
     public MedicamentoProfile()
     {
         CreateMap<ListarMedicamentoDto, ListarMedicamentoViewModel>();
+        CreateMap<DetalhesMedicamentoDto, ExcluirMedicamentoViewModel>();
     }
 }

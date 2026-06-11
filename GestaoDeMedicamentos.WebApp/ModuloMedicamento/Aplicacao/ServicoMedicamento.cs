@@ -60,5 +60,16 @@ public class ServicoMedicamento
             .Select(c => new ListarMedicamentoDto(c.Id, c.Nome, c.Descricao, c.QuantidadeEstoque, c.Fornecedor.Nome))
             .ToList();
     }
+    public Result<DetalhesMedicamentoDto> SelecionarPorId(string id)
+    {
+        Medicamento? medicamento = repositorioMedicamento.SelecionarPorId(id);
 
+        if (medicamento == null)
+            return Result.Fail("Medicamento não encontrado.");
+
+        return Result.Ok(new DetalhesMedicamentoDto(
+            medicamento.Id, medicamento.Nome, medicamento.Descricao,
+            medicamento.QuantidadeEstoque, medicamento.Fornecedor.Nome
+            ));
+    }
 }

@@ -21,3 +21,10 @@ public record CadastrarMedicamentoViewModel(
     [Required]
     string Fornecedor
 );
+public record ExcluirMedicamentoViewModel(
+    string Id,
+    string Nome,
+    string Descricao,
+    int QuantidadeEstoque,
+    string Fornecedor
+);
