@@ -14,6 +14,16 @@ public class PacienteController : Controller
 
     public ActionResult Listar()
     {
-        return View();
+        List<Paciente> listaDePacientes = repositorioPaciente.SelecionarTodos();
+        List<ListarPacienteViewModels> listarVm = new();
+
+        foreach (Paciente p in listaDePacientes)
+        {
+            ListarPacienteViewModels vm = new(p.Id, p.Nome, p.Telefone, p.CartaoSus, p.Cpf);
+
+            listarVm.Add(vm);
+        }
+
+        return View(listarVm);
     }
 }
