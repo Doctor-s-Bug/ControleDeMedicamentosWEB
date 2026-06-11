@@ -20,3 +20,10 @@ public record DetalhesMedicamentoDto(
     int QuantidadeEstoque,
     string Fornecedor
 );
+public record ExcluirMedicamentoDto(
+    string Id,
+    string Nome,
+    string Descricao,
+    int QuantidadeEstoque,
+    string Fornecedor
+);

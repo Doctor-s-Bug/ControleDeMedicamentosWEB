@@ -75,4 +75,19 @@ public class MedicamentoController : Controller
 
         return View(vm);
     }
+    [HttpPost]
+    public ActionResult Excluir(ExcluirMedicamentoViewModel vm)
+    {
+        ExcluirMedicamentoDto dto = new(vm.Id, vm.Nome, vm.Descricao, vm.QuantidadeEstoque, vm.Fornecedor);
+
+        Result resultado = servicoMedicamento.Excluir(dto);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        return RedirectToAction(nameof(Listar));
+    }
 }

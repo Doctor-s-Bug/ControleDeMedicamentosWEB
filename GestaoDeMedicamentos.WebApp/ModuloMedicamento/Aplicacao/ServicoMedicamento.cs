@@ -49,6 +49,19 @@ public class ServicoMedicamento
 
         return Result.Fail(new Error(erros.First()).WithMetadata("Campo", string.Empty));
     }
+
+    public Result Excluir(ExcluirMedicamentoDto dto)
+    {
+        Medicamento? medicamento = repositorioMedicamento.SelecionarPorId(dto.Id);
+
+        if (medicamento == null)
+            return Result.Fail("Medicamento não encontrado!");
+
+        repositorioMedicamento.Excluir(dto.Id);
+
+        return Result.Ok();
+    }
+
     private static Result Falha(string campo, string mensagem)
     {
         return Result.Fail(new FluentResults.Error(mensagem).WithMetadata("Campo", campo));
@@ -72,4 +85,5 @@ public class ServicoMedicamento
             medicamento.QuantidadeEstoque, medicamento.Fornecedor.Nome
             ));
     }
+
 }
