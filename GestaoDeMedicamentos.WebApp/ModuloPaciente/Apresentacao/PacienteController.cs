@@ -41,4 +41,20 @@ public class PacienteController : Controller
         return RedirectToAction(nameof(Listar));
     }
 
+    public ActionResult Excluir(string Id)
+    {
+        Paciente? paciente = repositorioPaciente.SelecionarPorId(Id);
+        ExcluirPacienteViewModels vm = new(paciente.Id, paciente.Nome, paciente.Telefone, paciente.CartaoSus, paciente.Cpf);
+        return View(vm);
+    }
+
+    [HttpPost]
+
+    public ActionResult Excluir(ExcluirPacienteViewModels vm)
+    {
+        Paciente? pacienteExcluir = repositorioPaciente.SelecionarPorId(vm.Id);
+        repositorioPaciente.Excluir(vm.Id);
+        return RedirectToAction(nameof(Listar));
+    }
+
 }
