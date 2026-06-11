@@ -26,4 +26,19 @@ public class PacienteController : Controller
 
         return View(listarVm);
     }
+
+    public ActionResult Cadastrar()
+    {
+        return View();
+    }
+
+    [HttpPost]
+
+    public ActionResult Cadastrar(CadastrarPacienteViewModels vm)
+    {
+        Paciente novoPaciente = new(vm.Nome, vm.Telefone, vm.CartaoSus, vm.Cpf);
+        repositorioPaciente.Cadastrar(novoPaciente);
+        return RedirectToAction(nameof(Listar));
+    }
+
 }

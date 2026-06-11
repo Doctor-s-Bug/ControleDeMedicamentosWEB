@@ -1,0 +1,38 @@
+@using GestaoDeMedicamentos.WebApp.ModuloPaciente.Apresentacao
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Cadastrar Pacientes";
+}
+@model CadastrarPacienteViewModels;
+
+<body>
+    <form class="card border border-secondary  shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="Cadastrar"
+          method="post">
+        <div class="">
+            <label asp-for="Nome" class="form-label fw-semibold text-uppercase small mt-3 fs-4">Nome</label>
+            <input asp-for="Nome" type="text" class="form-control fs-5">
+            <span asp-validation-for="Nome" class="text-danger small fw-semibold"></span>
+        </div>
+        <div class="">
+            <label asp-for="Telefone" class="form-label fw-semibold text-uppercase small mt-3 fs-4">Telefone</label>
+            <input asp-for="Telefone" type="text" class="form-control fs-5">
+            <span asp-validation-for="Telefone" class="text-danger small fw-semibold"></span>
+        </div>
+        <div class="">
+            <label asp-for="CartaoSus" class="form-label fw-semibold text-uppercase small mt-3 fs-4">Cartão SUS
+            </label>
+            <input asp-for="CartaoSus" type="text" class="form-control fs-5">
+            <span asp-validation-for="CartaoSus" class="text-danger small fw-semibold"></span>
+        </div>
+        <div class="">
+            <label asp-for="Cpf" class="form-label fw-semibold text-uppercase small mt-3 fs-4">CPF
+            </label>
+            <input asp-for="Cpf" type="text" class="form-control fs-5">
+            <span asp-validation-for="Cpf" class="text-danger small fw-semibold"></span>
+        </div>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
+            <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
+        </div>
+    </form>
+</body>
