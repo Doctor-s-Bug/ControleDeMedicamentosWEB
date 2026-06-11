@@ -42,7 +42,7 @@ public class MedicamentoController : Controller
     {
         if (!ModelState.IsValid)
         {
-            //carrega novamente a lista de fornecedores pra n estourar exceção 
+            //carrega novamente a lista de fornecedores pra n estourar erro 
             List<ListarFornecedorDTOS> dtosFornecedor = servicoFornecedor.SelecionarTodos();
             ViewBag.Fornecedores = mapper.Map<List<ListarFornecedorViewModel>>(dtosFornecedor);
 
@@ -106,5 +106,28 @@ public class MedicamentoController : Controller
         ViewBag.Fornecedores = mapper.Map<List<ListarFornecedorViewModel>>(dtosFornecedor);
 
         return View(vm);
+    }
+    [HttpPost]
+    public ActionResult Editar(EditarMedicamentoViewModel vm)
+    {
+        if (!ModelState.IsValid)
+        {
+            //carrega novamente a lista de fornecedores pra n estourar erro 
+            List<ListarFornecedorDTOS> dtosFornecedor = servicoFornecedor.SelecionarTodos();
+            ViewBag.Fornecedores = mapper.Map<List<ListarFornecedorViewModel>>(dtosFornecedor);
+
+            return RedirectToAction(nameof(Editar));
+        }
+
+        EditarMedicamentoDto dto = new(vm.Id, vm.Nome, vm.Descricao, vm.QuantidadeEstoque, vm.Fornecedor);
+
+        Result resultado = servicoMedicamento.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+            return RedirectToAction(nameof(Listar));
+        }
+        return RedirectToAction(nameof(Listar));
     }
 }

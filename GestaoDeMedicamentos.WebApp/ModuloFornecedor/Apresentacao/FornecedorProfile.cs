@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentResults;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 

@@ -14,7 +14,7 @@ public record CadastrarMedicamentoViewModel(
     [StringLength(100, ErrorMessage = "O campo \"Nome\" deve conter entre 3 a 100 caracteres.", MinimumLength = 3)]
     string Nome,
     [Required]
-    [StringLength(255, ErrorMessage = "O campo \"Nome\" deve conter entre 3 a 255 caracteres.", MinimumLength = 5)]
+    [StringLength(255, ErrorMessage = "O campo \"Descrição\" deve conter entre 3 a 255 caracteres.", MinimumLength = 5)]
     string Descricao,
     [Required]
     int QuantidadeEstoque,
@@ -34,7 +34,7 @@ public record EditarMedicamentoViewModel(
     [StringLength(100, ErrorMessage = "O campo \"Nome\" deve conter entre 3 a 100 caracteres.", MinimumLength = 3)]
     string Nome,
     [Required]
-    [StringLength(255, ErrorMessage = "O campo \"Nome\" deve conter entre 3 a 255 caracteres.", MinimumLength = 5)]
+    [StringLength(255, ErrorMessage = "O campo \"Descrição\" deve conter entre 3 a 255 caracteres.", MinimumLength = 5)]
     string Descricao,
     [Required]
     int QuantidadeEstoque,

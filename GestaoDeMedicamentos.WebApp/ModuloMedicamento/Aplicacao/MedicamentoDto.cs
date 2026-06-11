@@ -27,3 +27,10 @@ public record ExcluirMedicamentoDto(
     int QuantidadeEstoque,
     string Fornecedor
 );
+public record EditarMedicamentoDto(
+    string Id,
+    string Nome,
+    string Descricao,
+    int QuantidadeEstoque,
+    string Fornecedor
+);

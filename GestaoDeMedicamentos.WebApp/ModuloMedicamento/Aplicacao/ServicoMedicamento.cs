@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using AutoMapper;
 using FluentResults;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
@@ -62,6 +63,26 @@ public class ServicoMedicamento
         return Result.Ok();
     }
 
+    public Result Editar(EditarMedicamentoDto dto)
+    {
+        //selecionar o fornecedor
+        Result<DetalhesFornecedorDto> fornecedor = servicoFornecedor.SelecionarPorId(dto.Fornecedor);
+        if (fornecedor.IsFailed)
+            return Result.Fail("Fornecedor não encontrado!");
+
+        Fornecedor fornecedorSelecionado = mapper.Map<Fornecedor>(fornecedor.Value);
+
+        Medicamento? medicamentoEditado = new(dto.Nome, dto.Descricao, dto.QuantidadeEstoque, fornecedorSelecionado);
+
+        Result resultadoValidacao = ValidarEntidade(medicamentoEditado);
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        repositorioMedicamento.Editar(dto.Id, medicamentoEditado);
+
+        return Result.Ok();
+    }
+
     private static Result Falha(string campo, string mensagem)
     {
         return Result.Fail(new FluentResults.Error(mensagem).WithMetadata("Campo", campo));
@@ -85,5 +106,4 @@ public class ServicoMedicamento
             medicamento.QuantidadeEstoque, medicamento.Fornecedor.Nome
             ));
     }
-
 }
