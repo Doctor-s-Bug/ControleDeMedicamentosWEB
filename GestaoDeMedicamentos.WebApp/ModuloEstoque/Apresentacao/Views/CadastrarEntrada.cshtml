@@ -9,13 +9,13 @@
 @model CadastrarEntradaViewModel;
 
 <body>
-    <form class="card border border-secondary shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="CadastrarEntrada"
-          method="post">
+    <form class="card border border-secondary shadow-sm mx-auto p-4" style="max-width: 620px;"
+          asp-action="CadastrarEntrada" method="post">
         <div class="mb-3 d-flex flex-column">
             <label asp-for="Funcionario"
-                   class="form-label fw-semibold text-uppercase small mt-3 fs-4">Fornecedor</label>
+                   class="form-label fw-semibold text-uppercase small mt-3 fs-4">Funcionario</label>
             <select asp-for="Funcionario" class="form-control fs-5">
-                <option value="">Selecione uma Fornecedor</option>
+                <option value="">Selecione um Funcionario</option>
                 @foreach (ListarFuncionarioViewModel f in Funcionarios)
                 {
                     <option value="@f.Id">
@@ -29,7 +29,7 @@
             <label asp-for="Medicamento"
                    class="form-label fw-semibold text-uppercase small mt-3 fs-4">Medicamento</label>
             <select asp-for="Medicamento" class="form-control fs-5">
-                <option value="">Selecione uma Medicamento</option>
+                <option value="">Selecione um Medicamento</option>
                 @foreach (ListarMedicamentoViewModel f in Medicamentos)
                 {
                     <option value="@f.Id">
