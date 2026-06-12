@@ -10,10 +10,10 @@ public record ListarEntradaViewModel(
     int Quantidade
 );
 public record CadastrarEntradaViewModel(
-    [Required]
+    [Required(ErrorMessage = "O campo \"Medicamento\" é obrigatório!")]
     string Medicamento,
-    [Required]
+    [Required(ErrorMessage = "O campo \"Funcionario\" é obrigatório!")]
     string Funcionario,
-    [Required]
+    [Required(ErrorMessage = "O campo \"Quantidade Entrada\" é obrigatório!")]
     int Quantidade
 );

@@ -51,7 +51,14 @@ public class EstoqueController : Controller
     public ActionResult CadastrarEntrada(CadastrarEntradaViewModel vm)
     {
         if (!ModelState.IsValid)
+        {
+            List<DetalhesFuncionarioDto> dtosFuncionario = servicoFuncionario.SelecionarTodos();
+            ViewBag.Funcionarios = mapper.Map<List<ListarFuncionarioViewModel>>(dtosFuncionario);
+
+            List<ListarMedicamentoDto> dtosMedicameto = servicoMedicamento.SelecionarTodos();
+            ViewBag.Medicamentos = mapper.Map<List<ListarMedicamentoViewModel>>(dtosMedicameto);
             return View(vm);
+        }
 
         CadastrarEntradaDto dto = new(vm.Medicamento, vm.Funcionario, vm.Quantidade);
 
