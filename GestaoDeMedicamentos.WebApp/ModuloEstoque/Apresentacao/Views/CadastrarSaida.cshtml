@@ -1,0 +1,53 @@
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Cadastrar Entrada no Estoque";
+
+    List<ListarPacienteViewModels> Pacientes = ViewBag.Pacientes;
+    List<ListarMedicamentoViewModel> Medicamentos = ViewBag.Medicamentos;
+}
+
+@model CadastrarsSaidaViewModel;
+
+<body>
+    <form class="card border border-secondary shadow-sm mx-auto p-4" style="max-width: 620px;"
+          asp-action="CadastrarSaida" method="post">
+        <div class="mb-3 d-flex flex-column">
+            <label asp-for="Paciente" class="form-label fw-semibold text-uppercase small mt-3 fs-4">Paciente</label>
+            <select asp-for="Paciente" class="form-control fs-5">
+                <option value="">Selecione um Paciente</option>
+                @foreach (ListarPacienteViewModels f in Pacientes)
+                {
+                    <option value="@f.Id">
+                        @f.Nome
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="Paciente" class="text-danger small fw-semibold"></span>
+        </div>
+        <div class="mb-3 d-flex flex-column">
+            <label asp-for="Medicamento"
+                   class="form-label fw-semibold text-uppercase small mt-3 fs-4">Medicamento</label>
+            <select asp-for="Medicamento" class="form-control fs-5">
+                <option value="">Selecione um Medicamento</option>
+                @foreach (ListarMedicamentoViewModel f in Medicamentos)
+                {
+                    <option value="@f.Id">
+                        @f.Nome - Quantidade no Estoque: @f.QuantidadeEstoque
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="Medicamento" class="text-danger small fw-semibold"></span>
+        </div>
+        <div class="">
+            <label asp-for="QuantidadeSaida" class="form-label fw-semibold text-uppercase small mt-3 fs-4">Estoque da
+                Saída
+            </label>
+            <input asp-for="QuantidadeSaida" type="number" min="1" class="form-control fs-5">
+            <span asp-validation-for="QuantidadeSaida" class="text-danger small fw-semibold"></span>
+        </div>
+        <div class=" d-flex justify-content-end gap-2 mt-4">
+            <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
+            <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
+        </div>
+    </form>
+</body>

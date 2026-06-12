@@ -1,12 +1,14 @@
 @{
     Layout = "_Layout";
     ViewBag.Titulo = "Listagem de Saídas Estoque";
+
+    
 }
 
 @model List<ListarSaidaViewModel>
 
 <body>
-    <a class="btn btn-outline-primary rounded-pill px-4 mb-3" asp-action="CadastrarEntrada">Cadastrar Novo</a>
+    <a class="btn btn-outline-primary rounded-pill px-4 mb-3" asp-action="CadastrarSaida">Cadastrar Novo</a>
 
     @if (TempData["MensagemErro"] != null)
     {

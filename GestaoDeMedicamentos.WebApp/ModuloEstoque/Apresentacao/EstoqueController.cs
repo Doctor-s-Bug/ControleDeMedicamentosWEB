@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentResults;
+using GestaoDeMedicamentos.WebApp.Compartilhado.Apresentacao.Extensions;
 using GestaoDeMedicamentos.WebApp.ModuloEstoque.Aplicacao.Entrada;
 using GestaoDeMedicamentos.WebApp.ModuloEstoque.Aplicacao.Saida;
 using GestaoDeMedicamentos.WebApp.ModuloEstoque.Apresentacao.Views;
@@ -80,5 +81,38 @@ public class EstoqueController : Controller
         List<ListarSaidaViewModel> vms = mapper.Map<List<ListarSaidaViewModel>>(dots);
 
         return View(vms);
+    }
+    public ActionResult CadastrarSaida()
+    {
+        List<DetalhesPacienteDto> dtosPaciente = servicoPaciente.SelecionarTodos();
+        ViewBag.Pacientes = mapper.Map<List<ListarPacienteViewModels>>(dtosPaciente);
+
+        List<ListarMedicamentoDto> dtosMedicameto = servicoMedicamento.SelecionarTodos();
+        ViewBag.Medicamentos = mapper.Map<List<ListarMedicamentoViewModel>>(dtosMedicameto);
+
+        return View();
+    }
+    [HttpPost]
+    public ActionResult CadastrarSaida(CadastrarsSaidaViewModel vm)
+    {
+        if (!ModelState.IsValid)
+        {
+            List<DetalhesPacienteDto> dtosPaciente = servicoPaciente.SelecionarTodos();
+            ViewBag.Pacientes = mapper.Map<List<ListarPacienteViewModels>>(dtosPaciente);
+
+            List<ListarMedicamentoDto> dtosMedicameto = servicoMedicamento.SelecionarTodos();
+            ViewBag.Medicamentos = mapper.Map<List<ListarMedicamentoViewModel>>(dtosMedicameto);
+            return View(vm);
+        }
+
+        CadastrarSaidaDto dto = new(vm.Paciente, vm.Medicamento, vm.QuantidadeSaida);
+
+        Result resultado = servicoSaida.Cadastrar(dto);
+
+        if (resultado.IsFailed)
+            TempData.AddErrorMessage(resultado);
+
+        return RedirectToAction(nameof(ListarSaida));
+
     }
 }

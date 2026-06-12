@@ -5,5 +5,10 @@ public record ListarSaidaDto(
     string Data,
     string Medicamento,
     string Paciente,
+    int Quantidade
+);
+public record CadastrarSaidaDto(
+    string Paciente,
+    string Medicamento,
     int QuantidadeSaida
 );
