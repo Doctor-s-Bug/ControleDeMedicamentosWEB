@@ -1,4 +1,5 @@
 using GestaoDeMedicamentos.WebApp.ModuloEstoque.Dominio.Entrada;
+using GestaoDeMedicamentos.WebApp.ModuloEstoque.Dominio.Saida;
 using GestaoDeMedicamentos.WebApp.ModuloEstoque.Infra;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Infra;
@@ -27,5 +28,6 @@ public static class InjecaoDependencia
         services.AddScoped<IRepositorioMedicamento, RepositorioMedicamentoEmArquivo>();
         services.AddScoped<IRepositorioPaciente, RepositorioPacienteEmArquivo>();
         services.AddScoped<IRepositorioEntrada, RepositorioEntrada>();
+        services.AddScoped<IRepositorioSaida, RepositorioSaida>();
     }
 }
