@@ -24,10 +24,6 @@ public static class InjecaoDependencia
 
         services.AddAutoMapper(config =>
         {
-            config.AddProfile<FornecedorProfile>();
-            config.AddProfile<MedicamentoProfile>();
-            config.AddProfile<EntradaProfile>();
-            config.AddProfile<FuncionarioProfile>();
             config.AddMaps(typeof(Program));
         });
     }

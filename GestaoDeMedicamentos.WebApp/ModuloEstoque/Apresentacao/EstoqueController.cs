@@ -2,12 +2,15 @@ using AutoMapper;
 using FluentResults;
 using GestaoDeMedicamentos.WebApp.ModuloEstoque.Aplicacao.Entrada;
 using GestaoDeMedicamentos.WebApp.ModuloEstoque.Aplicacao.Saida;
+using GestaoDeMedicamentos.WebApp.ModuloEstoque.Apresentacao.Views;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Apresentacao;
 using GestaoDeMedicamentos.WebApp.ModuloFuncionario.Aplicacao;
 using GestaoDeMedicamentos.WebApp.ModuloFuncionario.Apresentacao;
 using GestaoDeMedicamentos.WebApp.ModuloMedicamento.Aplicacao;
 using GestaoDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao;
+using GestaoDeMedicamentos.WebApp.ModuloPaciente.Aplicacao;
+using GestaoDeMedicamentos.WebApp.ModuloPaciente.Apresentacao;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoDeMedicamentos.WebApp.ModuloEstoque.Apresentacao;
@@ -16,24 +19,29 @@ public class EstoqueController : Controller
 {
     private readonly ServicoEntrada servicoEntrada;
     private readonly ServicoSaida servicoSaida;
-    private readonly IMapper mapper;
     private readonly ServicoFuncionario servicoFuncionario;
     private readonly ServicoMedicamento servicoMedicamento;
+    private readonly ServicoPaciente servicoPaciente;
+    private readonly IMapper mapper;
 
-    public EstoqueController(ServicoEntrada serivicoEntrada, ServicoSaida servicoSaida, IMapper mapper, ServicoMedicamento servicoMedicamento, ServicoFuncionario servicoFuncionario)
+    public EstoqueController(
+        ServicoEntrada serivicoEntrada,
+        ServicoSaida servicoSaida, IMapper mapper,
+        ServicoMedicamento servicoMedicamento,
+        ServicoFuncionario servicoFuncionario,
+        ServicoPaciente servicoPaciente)
     {
         this.servicoEntrada = serivicoEntrada;
         this.servicoSaida = servicoSaida;
         this.mapper = mapper;
         this.servicoMedicamento = servicoMedicamento;
         this.servicoFuncionario = servicoFuncionario;
+        this.servicoPaciente = servicoPaciente;
     }
     public ActionResult ListarEntrada()
     {
         List<ListarEntradaDto> dots = servicoEntrada.SelecionarTodos();
         List<ListarEntradaViewModel> vms = mapper.Map<List<ListarEntradaViewModel>>(dots);
-
-
 
         return View(vms);
     }
@@ -65,5 +73,12 @@ public class EstoqueController : Controller
         Result resultado = servicoEntrada.Cadastrar(dto);
 
         return RedirectToAction(nameof(ListarEntrada));
+    }
+    public ActionResult ListarSaida()
+    {
+        List<ListarSaidaDto> dots = servicoSaida.SelecionarTodos();
+        List<ListarSaidaViewModel> vms = mapper.Map<List<ListarSaidaViewModel>>(dots);
+
+        return View(vms);
     }
 }

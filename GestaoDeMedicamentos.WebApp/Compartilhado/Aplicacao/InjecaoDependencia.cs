@@ -3,6 +3,7 @@ using GestaoDeMedicamentos.WebApp.ModuloEstoque.Aplicacao.Saida;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using GestaoDeMedicamentos.WebApp.ModuloFuncionario.Aplicacao;
 using GestaoDeMedicamentos.WebApp.ModuloMedicamento.Aplicacao;
+using GestaoDeMedicamentos.WebApp.ModuloPaciente.Aplicacao;
 
 namespace GestaoDeMedicamentos.WebApp.Compartilhado.Aplicacao;
 
@@ -15,5 +16,6 @@ public static class InjecaoDependencia
         services.AddScoped<ServicoEntrada>();
         services.AddScoped<ServicoSaida>();
         services.AddScoped<ServicoFuncionario>();
+        services.AddScoped<ServicoPaciente>();
     }
 }

@@ -1,5 +1,9 @@
 namespace GestaoDeMedicamentos.WebApp.ModuloEstoque.Aplicacao.Saida;
 
-public class SaidaDtos
-{
-}
+public record ListarSaidaDto(
+    string Id,
+    string Data,
+    string Medicamento,
+    string Paciente,
+    int QuantidadeSaida
+);
