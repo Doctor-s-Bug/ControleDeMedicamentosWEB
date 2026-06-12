@@ -9,3 +9,8 @@ public record ListarEntradaDto(
     string Funcionario,
     int Quantidade
 );
+public record CadastrarEntradaDto(
+    string Medicamento,
+    string Funcionario,
+    int Quantidade
+);

@@ -37,7 +37,7 @@ public class EntradaEstoque : EntidadeBase<EntradaEstoque>
 
         return erros;
     }
-
+    
     public override void Atualizar(EntradaEstoque entidadeAtualizada)
     {
         throw new NotImplementedException();

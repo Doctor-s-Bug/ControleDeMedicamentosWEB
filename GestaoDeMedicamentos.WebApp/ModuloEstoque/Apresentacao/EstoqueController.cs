@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentResults;
 using GestaoDeMedicamentos.WebApp.ModuloEstoque.Aplicacao.Entrada;
 using GestaoDeMedicamentos.WebApp.ModuloEstoque.Aplicacao.Saida;
 using GestaoDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
@@ -46,5 +47,16 @@ public class EstoqueController : Controller
 
         return View();
     }
-    
+    [HttpPost]
+    public ActionResult CadastrarEntrada(CadastrarEntradaViewModel vm)
+    {
+        if (!ModelState.IsValid)
+            return View(vm);
+
+        CadastrarEntradaDto dto = new(vm.Medicamento, vm.Funcionario, vm.Quantidade);
+
+        Result resultado = servicoEntrada.Cadastrar(dto);
+
+        return RedirectToAction(nameof(ListarEntrada));
+    }
 }

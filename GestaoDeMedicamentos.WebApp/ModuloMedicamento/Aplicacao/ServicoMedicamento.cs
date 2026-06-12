@@ -103,7 +103,7 @@ public class ServicoMedicamento
 
         return Result.Ok(new DetalhesMedicamentoDto(
             medicamento.Id, medicamento.Nome, medicamento.Descricao,
-            medicamento.QuantidadeEstoque, medicamento.Fornecedor.Nome
+            medicamento.QuantidadeEstoque, medicamento.Fornecedor.Id
             ));
     }
 }

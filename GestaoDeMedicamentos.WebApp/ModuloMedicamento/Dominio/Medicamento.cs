@@ -12,7 +12,6 @@ public class Medicamento : EntidadeBase<Medicamento>
 
     public Medicamento()
     {
-
     }
     public Medicamento(string nome, string descricao, int quantidadeEstoque, Fornecedor fornecedor)
     {

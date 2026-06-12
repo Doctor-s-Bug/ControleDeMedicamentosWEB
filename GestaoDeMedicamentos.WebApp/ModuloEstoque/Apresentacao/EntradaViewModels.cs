@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace GestaoDeMedicamentos.WebApp.ModuloEstoque.Apresentacao;
 
 public record ListarEntradaViewModel(
@@ -8,7 +10,10 @@ public record ListarEntradaViewModel(
     int Quantidade
 );
 public record CadastrarEntradaViewModel(
+    [Required]
     string Medicamento,
+    [Required]
     string Funcionario,
+    [Required]
     int Quantidade
 );
